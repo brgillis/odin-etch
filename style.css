@@ -1,0 +1,79 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  min-height: 100vh;
+  font-family: 'Roboto', sans-serif;
+  color: #1F2937;
+  font-size: 36px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 0px;
+  margin: 0px;
+}
+
+body>* {
+  flex-grow: 1;
+  padding: 8px 0;
+}
+
+.header,
+.footer {
+  flex-grow: 0;
+  background-color: #1F2937;
+}
+
+.header,
+.footer,
+button {
+  color: #F9FAF8;
+}
+
+button {
+  background-color: #3882F6;
+  border-radius: 8px;
+  font: 18px;
+  padding: 6px;
+  width: 150px;
+}
+
+*:has(> .max-width-box) {
+  display: flex;
+  justify-content: center;
+}
+
+.max-width-box {
+  flex: 0 1 1200px;
+}
+
+.secondary-text-light,
+.secondary-text-light a {
+  font-size: 18px;
+  color: #E5E7EB;
+  text-decoration: none;
+}
+
+.secondary-text-light a:hover {
+  color: #cbcfd6;
+}
+
+.secondary-text-dark {
+  font-size: 18px;
+  color: rgb(100, 100, 100);
+}
+
+.header .max-width-box {
+  display: flex;
+  flex-shrink: 1;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px;
+}
+
+.header-logo {
+  font-family: "Brush Script MT", cursive, Arial, sans-serif;
+  font-size: 48px;
+  margin: 0 16px;
+}
