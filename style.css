@@ -99,5 +99,7 @@ button {
   flex: 0 32px;
   margin: 0px;
   padding: 0px;
+  height: 32px;
+  width: 32px;
   border: 1px solid black;
 }
