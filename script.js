@@ -120,7 +120,9 @@ function resetEtchContainer() {
 }
 
 function resetEtchCell(oEtchCell) {
-  // TODO
+  oEtchCell.classList.remove("hover");
+  oEtchCell.classList.remove("traced");
+  oEtchCell.classList.remove("active");
 }
 
 document.querySelector("button.reset").addEventListener("click", resetEtchContainer);
