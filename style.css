@@ -31,14 +31,6 @@ button {
   color: #F9FAF8;
 }
 
-button {
-  background-color: #3882F6;
-  border-radius: 8px;
-  font: 18px;
-  padding: 6px;
-  width: 150px;
-}
-
 *:has(> .max-width-box) {
   display: flex;
   justify-content: center;
@@ -102,4 +94,30 @@ button {
   height: 32px;
   width: 32px;
   border: 1px solid black;
+}
+
+.footer .max-width-box {
+  display: flex;
+  flex-shrink: 1;
+  justify-content: center;
+  align-items: center;
+  padding: 8px;
+}
+
+button {
+  background-color: #3882F6;
+  border: 2px solid #E5E7EB;
+  border-radius: 8px;
+  font-size: 36px;
+  margin: 8px;
+  padding: 6px 32px;
+  
+}
+
+button:hover {
+  background-color: #5192fa;
+}
+
+button:active {
+  background-color: #6da4fc;
 }
