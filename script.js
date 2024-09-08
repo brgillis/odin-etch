@@ -10,13 +10,13 @@ function fillEtchContainer() {
 
   const oEtchRow = createEtchRow();
   oEtchPanel.appendChild(oEtchRow);
-  aEtchCells.push(new Array(oEtchRow.childNodes));
+  aEtchCells.push(Array.from(oEtchRow.childNodes));
 
 
   for(let i=1; i<NUM_CELLS_Y; ++i) {
     const oNewEtchRow = oEtchRow.cloneNode(true);
     oEtchPanel.appendChild(oNewEtchRow);
-    aEtchCells.push(new Array(oNewEtchRow.childNodes));
+    aEtchCells.push(Array.from(oNewEtchRow.childNodes));
   }
 }
 
@@ -42,6 +42,36 @@ function createEtchCell() {
 
 fillEtchContainer();
 
+// Hook up mouse operations to each cell
+function mouseEnterCell(e) {
+  const oEtchCell = e.target;
+  oEtchCell.classList.add("hover");
+  oEtchCell.classList.add("traced");
+}
+
+function mouseLeaveCell(e) {
+  const oEtchCell = e.target;
+  oEtchCell.classList.remove("hover");
+}
+
+function mouseClickCell(e) {
+  const oEtchCell = e.target;
+  oEtchCell.classList.toggle("active");
+}
+
+for (let i=0; i<aEtchCells.length; ++i) {
+
+  const aEtchRow = aEtchCells[i];
+
+  for (let j=0; j<aEtchRow.length; ++j) {
+    const oEtchCell = aEtchRow[j];
+    oEtchCell.addEventListener("mouseover", mouseEnterCell);
+    oEtchCell.addEventListener("mouseout", mouseLeaveCell);
+    oEtchCell.addEventListener("mousedown", mouseClickCell);
+  }
+
+}
+
 // Hook up the reset button to a reset operation
 function resetEtchContainer() {
 
@@ -49,7 +79,7 @@ function resetEtchContainer() {
 
     const aEtchRow = aEtchCells[i];
 
-    for (let j=0; j<aEtchCells.length; ++j) {
+    for (let j=0; j<aEtchRow.length; ++j) {
       const oEtchCell = aEtchRow[j];
       resetEtchCell(oEtchCell);
     }

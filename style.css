@@ -96,6 +96,22 @@ button {
   border: 1px solid black;
 }
 
+.etch-cell.traced {
+  background-color: rgb(212, 212, 212);
+}
+
+.etch-cell.active {
+  background-color: black;
+}
+
+.etch-cell.hover {
+  background-color: rgb(128, 128, 128);
+}
+
+.etch-cell.hover.active {
+  background-color: rgb(64, 64, 64);
+}
+
 .footer .max-width-box {
   display: flex;
   flex-shrink: 1;
