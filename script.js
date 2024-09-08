@@ -42,11 +42,23 @@ function createEtchCell() {
 
 fillEtchContainer();
 
-// Hook up mouse operations to each cell
+// Set up mouse operations for each cell
+
+bMouseButtonIsPressed = false;
+bTargetActiveState = true;
+
 function mouseEnterCell(e) {
   const oEtchCell = e.target;
   oEtchCell.classList.add("hover");
   oEtchCell.classList.add("traced");
+
+  if(bMouseButtonIsPressed) {
+    if(bTargetActiveState) {
+      oEtchCell.classList.add("active");
+    } else {
+      oEtchCell.classList.remove("active");
+    }
+  }
 }
 
 function mouseLeaveCell(e) {
@@ -57,6 +69,23 @@ function mouseLeaveCell(e) {
 function mouseClickCell(e) {
   const oEtchCell = e.target;
   oEtchCell.classList.toggle("active");
+
+  // Store the active state so we can apply it to any cells we drag into
+  if(Array.from(oEtchCell.classList).includes("active")) {
+    bTargetActiveState = true;
+  } else {
+    bTargetActiveState = false;
+  }
+
+  bMouseButtonIsPressed = true;
+}
+
+function mouseDown(e) {
+  bMouseButtonIsPressed = true;
+}
+
+function mouseUp(e) {
+  bMouseButtonIsPressed = false;
 }
 
 for (let i=0; i<aEtchCells.length; ++i) {
@@ -69,8 +98,10 @@ for (let i=0; i<aEtchCells.length; ++i) {
     oEtchCell.addEventListener("mouseout", mouseLeaveCell);
     oEtchCell.addEventListener("mousedown", mouseClickCell);
   }
-
 }
+
+window.addEventListener("mousedown", mouseDown);
+window.addEventListener("mouseup", mouseUp);
 
 // Hook up the reset button to a reset operation
 function resetEtchContainer() {
