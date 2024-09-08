@@ -2,14 +2,21 @@ const CELL_SIZE_PX = 32;
 const NUM_CELLS_X = 16;
 const NUM_CELLS_Y = 16;
 
+// 2D array planned to contain references to all cells
+const aEtchCells = [];
+
 function fillEtchContainer() {
   const oEtchPanel = document.querySelector(".etch-container .max-width-box");
 
-  let oEtchRow = createEtchRow();
+  const oEtchRow = createEtchRow();
   oEtchPanel.appendChild(oEtchRow);
+  aEtchCells.push(new Array(oEtchRow.childNodes));
+
 
   for(let i=1; i<NUM_CELLS_Y; ++i) {
-    oEtchPanel.appendChild(oEtchRow.cloneNode(true));
+    const oNewEtchRow = oEtchRow.cloneNode(true);
+    oEtchPanel.appendChild(oNewEtchRow);
+    aEtchCells.push(new Array(oNewEtchRow.childNodes));
   }
 }
 
@@ -17,7 +24,7 @@ function createEtchRow() {
   const oEtchRow = document.createElement("div");
   oEtchRow.classList.add("etch-row");
 
-  let oEtchCell = createEtchCell();
+  const oEtchCell = createEtchCell();
   oEtchRow.appendChild(oEtchCell);
 
   for(let i=1; i<NUM_CELLS_X; ++i) {
@@ -34,3 +41,25 @@ function createEtchCell() {
 }
 
 fillEtchContainer();
+
+// Hook up the reset button to a reset operation
+function resetEtchContainer() {
+
+  for (let i=0; i<aEtchCells.length; ++i) {
+
+    const aEtchRow = aEtchCells[i];
+
+    for (let j=0; j<aEtchCells.length; ++j) {
+      const oEtchCell = aEtchRow[j];
+      resetEtchCell(oEtchCell);
+    }
+
+  }
+
+}
+
+function resetEtchCell(oEtchCell) {
+  // TODO
+}
+
+document.querySelector("button.reset").addEventListener("click", resetEtchContainer);
