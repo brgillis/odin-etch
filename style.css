@@ -77,3 +77,27 @@ button {
   font-size: 48px;
   margin: 0 16px;
 }
+
+.etch-container .max-width-box {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.etch-row {
+  flex: 0 32px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  margin: 0px;
+  padding: 0px;
+}
+
+.etch-cell {
+  flex: 0 32px;
+  margin: 0px;
+  padding: 0px;
+  border: 1px solid black;
+}
