@@ -1,46 +1,67 @@
 const CELL_SIZE_PX = 32;
-const NUM_CELLS_X = 16;
-const NUM_CELLS_Y = 16;
+const NUM_CELLS = 16;
+
+const INIT_SIZE = CELL_SIZE_PX*NUM_CELLS;
+
+const oEtchPanel = document.querySelector(".etch-container .max-width-box");
 
 // 2D array planned to contain references to all cells
 const aEtchCells = [];
 
-function fillEtchContainer() {
-  const oEtchPanel = document.querySelector(".etch-container .max-width-box");
+function fillEtchContainer(iNumCells) {
+  // Determine the cell size such that the size of the grid is always about the same
+  const iCellSizePx = Math.floor(INIT_SIZE/iNumCells);
 
-  const oEtchRow = createEtchRow();
+  const oEtchRow = createEtchRow(iNumCells, iCellSizePx);
   oEtchPanel.appendChild(oEtchRow);
   aEtchCells.push(Array.from(oEtchRow.childNodes));
 
 
-  for(let i=1; i<NUM_CELLS_Y; ++i) {
+  for(let i=1; i<iNumCells; ++i) {
     const oNewEtchRow = oEtchRow.cloneNode(true);
     oEtchPanel.appendChild(oNewEtchRow);
     aEtchCells.push(Array.from(oNewEtchRow.childNodes));
   }
+
+  for (let i=0; i<aEtchCells.length; ++i) {
+
+    const aEtchRow = aEtchCells[i];
+
+    for (let j=0; j<aEtchRow.length; ++j) {
+      const oEtchCell = aEtchRow[j];
+      oEtchCell.addEventListener("mouseover", mouseEnterCell);
+      oEtchCell.addEventListener("mouseout", mouseLeaveCell);
+      oEtchCell.addEventListener("mousedown", mouseClickCell);
+    }
+  }
 }
 
-function createEtchRow() {
+function createEtchRow(iNumCells, iCellSizePx) {
   const oEtchRow = document.createElement("div");
+  oEtchRow.style.height = iCellSizePx + 'px';
+  oEtchRow.style.flex = "0 " + iCellSizePx + 'px';
   oEtchRow.classList.add("etch-row");
 
-  const oEtchCell = createEtchCell();
+  const oEtchCell = createEtchCell(iCellSizePx);
   oEtchRow.appendChild(oEtchCell);
 
-  for(let i=1; i<NUM_CELLS_X; ++i) {
+  for(let i=1; i<iNumCells; ++i) {
     oEtchRow.appendChild(oEtchCell.cloneNode(true));
   }
 
   return oEtchRow;
 }
 
-function createEtchCell() {
+function createEtchCell(iCellSizePx) {
   const oEtchCell = document.createElement("div");
   oEtchCell.classList.add("etch-cell");
+  oEtchCell.style.height = iCellSizePx + 'px';
+  oEtchCell.style.width = iCellSizePx + 'px';
+  oEtchCell.style.flex = "0 " + iCellSizePx + 'px';
   return oEtchCell;
 }
 
-fillEtchContainer();
+fillEtchContainer(NUM_CELLS);
 
 // Set up mouse operations for each cell
 
@@ -88,18 +109,6 @@ function mouseUp(e) {
   bMouseButtonIsPressed = false;
 }
 
-for (let i=0; i<aEtchCells.length; ++i) {
-
-  const aEtchRow = aEtchCells[i];
-
-  for (let j=0; j<aEtchRow.length; ++j) {
-    const oEtchCell = aEtchRow[j];
-    oEtchCell.addEventListener("mouseover", mouseEnterCell);
-    oEtchCell.addEventListener("mouseout", mouseLeaveCell);
-    oEtchCell.addEventListener("mousedown", mouseClickCell);
-  }
-}
-
 window.addEventListener("mousedown", mouseDown);
 window.addEventListener("mouseup", mouseUp);
 
@@ -126,3 +135,30 @@ function resetEtchCell(oEtchCell) {
 }
 
 document.querySelector("button.reset").addEventListener("click", resetEtchContainer);
+
+// Hook up the resize button to a resize operation
+function resizeEtchContainer() {
+  iNewNumCells = parseInt(prompt("How many cells (per axis) would you like?"));
+
+  // Check for validity, else output an error to the console
+  if(!(iNewNumCells>0 && iNewNumCells<=100)) {
+    console.error("Invalid number of cells - must be between 1 and 100.")
+    return;
+  }
+
+  // Delete the existing canvas
+  for (const child of Array.from(oEtchPanel.children)) {
+    for (const grandchild of Array.from(child.children)) {
+      grandchild.remove();
+    }
+    child.remove();
+  }
+
+  aEtchCells.length = 0;
+
+  // Create a new canvas
+  fillEtchContainer(iNewNumCells);
+
+}
+
+document.querySelector("button.resize").addEventListener("click", resizeEtchContainer);
