@@ -87,7 +87,8 @@ bTargetActiveState = true;
 function mouseEnterCell(e) {
   const oEtchCell = e.target;
   oEtchCell.classList.add("hover");
-  oEtchCell.classList.add("traced");
+  if (bHoverTrail)
+    oEtchCell.classList.add("traced");
 
   if(bMouseButtonIsPressed) {
     if(bTargetActiveState) {
