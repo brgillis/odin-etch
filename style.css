@@ -14,6 +14,11 @@ body {
   margin: 0px;
 }
 
+input[type=checkbox] {
+  height: 24px;
+  width: 24px;
+}
+
 body>* {
   flex-grow: 1;
   padding: 8px 0;
@@ -68,6 +73,27 @@ button {
   font-family: "Brush Script MT", cursive, Arial, sans-serif;
   font-size: 48px;
   margin: 0 16px;
+}
+
+.options .max-width-box {
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 1;
+  justify-content: space-around;
+  align-items: center;
+  padding: 8px;
+  margin: 0px;
+}
+
+.options ul {
+  padding: 0px;
+  margin: 0px;
+  list-style-type: none;
+}
+
+li {
+  margin: 0;
+  padding: 0;
 }
 
 .etch-container .max-width-box {
