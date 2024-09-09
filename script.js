@@ -1,3 +1,19 @@
+// Manage and track whether to show a hover trail
+const oCboxHover = document.querySelector("#cbox-hover");
+let bHoverTrail = true;
+
+function toggleHover() {
+  if (oCboxHover.checked) {
+    bHoverTrail = true;
+  } else {
+    bHoverTrail = false;
+  }
+}
+
+oCboxHover.addEventListener("click", toggleHover);
+
+// Manage the sketch grid
+
 const CELL_SIZE_PX = 32;
 const NUM_CELLS = 16;
 
@@ -71,7 +87,8 @@ bTargetActiveState = true;
 function mouseEnterCell(e) {
   const oEtchCell = e.target;
   oEtchCell.classList.add("hover");
-  oEtchCell.classList.add("traced");
+  if (bHoverTrail)
+    oEtchCell.classList.add("traced");
 
   if(bMouseButtonIsPressed) {
     if(bTargetActiveState) {
